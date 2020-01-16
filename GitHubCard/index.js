@@ -6,6 +6,9 @@
 axios.get('https://api.github.com/users/eoinlynchcodes')
 .then(response => {
   console.log(response);
+  let newCard = document.querySelector('.cards');
+  newCard.append(createComponent(response));
+
 })
 .catch(error => {
   console.log(error);
@@ -52,9 +55,11 @@ const followersArray = [];
 </div>
 */
 
-function createComponent(){
+function createComponent(input){
 
-  // Create HTML Elements
+console.log(input);
+  
+// Create HTML Elements
   const card = document.createElement('div');
   const image = document.createElement('img');
   const cardInfo = document.createElement('div');
@@ -69,19 +74,34 @@ function createComponent(){
 
   // Structure. 
 
+  // Sort our what appends where...
+  card.append(cardInfo);
   card.append(image);
   cardInfo.append(name);
   cardInfo.append(username);
   cardInfo.append(location);
   cardInfo.append(profile);
   cardInfo.append(githubLink);
-  cardInfo.append();
-  cardInfo.append(name);
-  cardInfo.append(name);
+  cardInfo.append(followers);
+  cardInfo.append(following);
+  cardInfo.append(bio);
 
+  // Add Class list
+  card.classList.add('card');
+  cardInfo.classList.add('card-info');
+  name.classList.add('name');
+  username.classList.add('username');
 
-
-
+  // Add Content
+  image.src = input.data.avatar_url;
+  name.textContent = input.data.name;
+  username.textContent = 'Username: ' + input.data.login;
+  location.textContent = 'Location: ' + input.data.location;
+  followers.textContent = 'Followers: ' + input.data.followers;
+  following.textContent = 'Following: ' + input.data.following;
+  bio.textContent = 'Bio: ' + input.data.bio;
+  
+  return card;
 }
 
 /* List of LS Instructors Github username's: 
